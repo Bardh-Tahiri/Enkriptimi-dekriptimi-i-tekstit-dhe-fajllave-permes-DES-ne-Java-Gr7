@@ -1,5 +1,7 @@
+import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import java.io.FileWriter;
 import java.util.Formatter;
 
 public class FileEncryption {
@@ -18,6 +20,15 @@ public class FileEncryption {
                 keyFormatter.format("%02X", b);
             }
             keyFormatter.close();
+            // Shkrimi i Celsit ne file
+            FileWriter keyWriter = new FileWriter("secret.key");
+            keyWriter.write(keyHex.toString());
+            keyWriter.close();
+            System.out.println("Key saved to secret.key: " + keyHex);
+
+            // 3. Inicializimi i klases Cipher per enkriptim
+            Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
