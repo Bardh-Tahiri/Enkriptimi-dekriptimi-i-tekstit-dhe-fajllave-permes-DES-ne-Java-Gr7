@@ -40,6 +40,23 @@ public class FileEncryption {
                 buffer.write(block, 0, bytesRead);
             }
             fis.close();
+            // 5. Enkriptimi i file
+            byte[] encryptedBytes = cipher.doFinal(buffer.toByteArray());
+
+            // 6. Konvertimi i file te enkriptuar nga byte ne Heksadecimal
+            StringBuilder hexOutput = new StringBuilder();
+            Formatter formatter = new Formatter(hexOutput);
+            for (byte b : encryptedBytes) {
+                formatter.format("%02X", b);
+            }
+            formatter.close();
+
+            // 7. Shkrimi i file te enkriptuar ne nje file te ri
+            FileWriter writer = new FileWriter("encrypted_hex.txt");
+            writer.write(hexOutput.toString());
+            writer.close();
+
+            System.out.println("File encrypted and saved as: encrypted_hex.txt");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
