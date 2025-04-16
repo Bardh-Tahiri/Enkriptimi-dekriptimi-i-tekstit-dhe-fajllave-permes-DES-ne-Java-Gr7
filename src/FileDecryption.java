@@ -18,6 +18,15 @@ public class FileDecryption {
             // 2. Inicializimi i cipher per dekriptim
             Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+            // 3. Leximi i hex string nga file i enkriptuar
+            BufferedReader reader = new BufferedReader(new FileReader("encrypted_hex.txt"));
+            StringBuilder hexData = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                hexData.append(line.trim());
+            }
+            reader.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
