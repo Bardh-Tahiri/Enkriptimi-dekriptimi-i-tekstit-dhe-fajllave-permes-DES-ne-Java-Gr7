@@ -2,6 +2,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.HexFormat;
 
@@ -34,6 +35,12 @@ public class FileDecryption {
             // 5. Dekriptimi i te dhenave
             byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
 
+            // 6. Shkrimi i te dhenave te dekriptuara ne file
+            FileOutputStream fos = new FileOutputStream("decrypted.txt");
+            fos.write(decryptedBytes);
+            fos.close();
+
+            System.out.println("File successfully decrypted to: decrypted.txt");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
