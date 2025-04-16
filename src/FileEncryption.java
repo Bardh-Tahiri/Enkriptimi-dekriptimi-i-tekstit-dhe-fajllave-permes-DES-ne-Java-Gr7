@@ -1,6 +1,8 @@
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.util.Formatter;
 
@@ -29,6 +31,15 @@ public class FileEncryption {
             // 3. Inicializimi i klases Cipher per enkriptim
             Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            // 4. Leximi i input file
+            FileInputStream fis = new FileInputStream("PlainText.txt");
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            byte[] block = new byte[64];
+            int bytesRead;
+            while ((bytesRead = fis.read(block)) != -1) {
+                buffer.write(block, 0, bytesRead);
+            }
+            fis.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
