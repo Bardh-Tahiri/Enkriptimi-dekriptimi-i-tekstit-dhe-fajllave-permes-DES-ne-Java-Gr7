@@ -27,6 +27,13 @@ public class FileDecryption {
                 hexData.append(line.trim());
             }
             reader.close();
+
+            // 4. Konvertimi i hex string ne byte array
+            byte[] encryptedBytes = HexFormat.of().parseHex(hexData.toString());
+
+            // 5. Dekriptimi i te dhenave
+            byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
